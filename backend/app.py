@@ -1,11 +1,11 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, session
 from pymongo import MongoClient
 import os
 import bcrypt
 from huggingface_hub import InferenceClient
 
 app = Flask(__name__, template_folder = "frontend")
-
+app.secret_key = os.urandom(28)
 MONGODB_URI = "mongodb+srv://anusha06:Akshat12!@cluster0.8ibtd.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(MONGODB_URI)
 
@@ -77,7 +77,11 @@ def login():
     user = users_collection.find_one({"username": username})
     if not user or not bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
         return "Invalid username or password", 401
+    else:
+        session['username'] = username
+        return jsonify({"success": True, "message": "logged in :)"}), 200
 
+    
     return "Login successful"
 
 #SUBMISSION FORM!
@@ -88,16 +92,21 @@ def submit_page():
 
 @app.route("/submit_problem", methods=["POST"])
 def submit_problem_post():
+    if 'username' not in session:
+        return jsonify({"error": "user not logged in"}), 401
+
     title = request.form.get("title")
     description = request.form.get("description")
     category = request.form.get("category")
+    user = session['username'] 
     if not title or not description:
         return jsonify({"error": "not fully completed :("}), 400
     #insertingggg to mongo!
     data = {
         "title": title,
         "description": description,
-         "category": category
+         "category": category,
+         "user": user
     }
     result = problems_collection.insert_one(data)
     return jsonify({"message": "submitted successfully :)"}), 200
