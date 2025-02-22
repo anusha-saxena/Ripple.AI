@@ -5,10 +5,11 @@ import bcrypt
 
 app = Flask(__name__, template_folder = "frontend")
 
-client = MongoClient(os.getenv("MONGODB_URI"))
-db = client.water_rights
-problems_collection = db.problems  #store problems
-users_collection = db.users  #store users
+MONGODB_URI = "mongodb+srv://anushasaxena06:QkVhYP3MT0WAhz5B@cluster0.8ibtd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+client = MongoClient(MONGODB_URI)
+db = client["water_rights"]
+users_collection = db["users"]
+problems_collection = db["problems"]
 
 @app.route("/")
 def home():
