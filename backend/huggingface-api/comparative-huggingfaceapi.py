@@ -6,7 +6,7 @@ login(token=hf_token)
 
 llm_client = InferenceClient(
     model="sentence-transformers/all-mpnet-base-v2",
-    token=os.getenv("HF_TOKEN"),  # Reads from environment
+    token=os.getenv("HF_TOKEN"), 
     timeout=200
 )
 
