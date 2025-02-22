@@ -10,7 +10,8 @@ problems_collection = db.problems
 def submit_problem():
     data = request.json
     problems_collection.insert_one(data)
-    return jsonify({"message": "Problem submitted successfully"}), 200
+    return jsonify({"client_message": data}), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True)
