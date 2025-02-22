@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import os
 import bcrypt
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = "frontend")
 
 client = MongoClient(os.getenv("MONGODB_URI"))
 db = client.water_rights
