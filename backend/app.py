@@ -2,21 +2,41 @@ from flask import Flask, jsonify, request, render_template
 from pymongo import MongoClient
 import os
 import bcrypt
+from huggingface_hub import InferenceClient
 
 app = Flask(__name__, template_folder = "frontend")
 
 MONGODB_URI = "mongodb+srv://anusha06:Akshat12!@cluster0.8ibtd.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(MONGODB_URI)
-#added databases in mongoDB Atlas basically
+
 db = client["water_rights"]
 users_collection = db["users"]
 problems_collection = db["problems"]
+
+#huggingface api setup 
+HF_TOKEN = os.getenv("HF_TOKEN") 
+llm_client = InferenceClient(
+    model="microsoft/Phi-3-mini-4K-instruct",
+    token=HF_TOKEN
+)
 
 @app.route("/")
 def home():
     return "Flask server running :)"
 
+#ai generated petition
+@app.route("/generate_petition", methods=["POST"])
+def generate_petition():
+    data = request.json
+    issue_description = data.get("description")
 
+    if not issue_description:
+        return jsonify({"error": "No issue description provided"}), 400
+    
+    prompt = f"Write a short petition for the following social justice issue: {issue_description}"
+    ai_response = llm_client.text_generation(prompt, max_new_tokens=200)
+
+    return jsonify({"petition": ai_response})
 
 #user registration
 @app.route("/register", methods=["GET"])
@@ -59,10 +79,6 @@ def login():
         return "Invalid username or password", 401
 
     return "Login successful"
-
-
-
-
 
 #SUBMISSION FORM!
 
