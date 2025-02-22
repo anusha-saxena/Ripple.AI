@@ -31,7 +31,7 @@ def register_post():
         return jsonify({"error":"no complete :("}), 400
     existing_user = users_collection.find_one({"username": username})
     if existing_user:
-        return jsonify({"error": "username already exists"}), 409
+        return jsonify({"success": False, "error": "Username already exists"}), 409
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
    #inserting into MONGODB Users Database!!!!! :>>
     data = {
@@ -39,7 +39,7 @@ def register_post():
         "password": hashed_password
     }
     result = users_collection.insert_one(data)
-    return jsonify({"message": "registered successfully :)"}), 201
+    return jsonify({"success": True, "message": "Registered successfully"}), 201
 
 
 #login page
