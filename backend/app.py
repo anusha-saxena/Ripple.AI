@@ -57,18 +57,32 @@ def login():
 
     return "Login successful"
 
-#problem submit
-@app.route("/submit_problem", methods=["POST"])
-def submit_problem():
-    data = request.json
-    problems_collection.insert_one(data)
-    return jsonify({"client_message": data}), 200
 
-#get stored problems
-@app.route('/get', methods=['GET'])
-def get_documents():
-    documents = list(problems_collection.find({}, {"_id": 0}))
-    return jsonify(documents)
+
+
+
+#SUBMISSION FORM!
+
+@app.route("/submit", methods=["GET"])
+def submit_page():
+    return render_template("submit.html")
+
+@app.route("/submit_problem", methods=["POST"])
+def submit_problem_post():
+    title = request.form.get("title")
+    description = request.form.get("description")
+    category = request.form.get("category")
+    if not title or not description:
+        return jsonify({"error": "not fully completed :("}), 400
+    #insertingggg to mongo!
+        result = problems_collection.insert_one({
+        "title": title,
+        "description": description,
+        "category": category
+    })
+    return jsonify({"message": "submitted successfully :)"}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
