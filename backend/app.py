@@ -24,20 +24,22 @@ def register():
     return render_template("register.html")
 @app.route("/register", methods=["POST"])
 def register_post():
-    data = request.form
+    data = request.json
     username = data.get("username")
     password = data.get("password")
     if not username or not password:
         return jsonify({"error":"no complete :("}), 400
-   
-    hashed = bcrypt.hashpw(password.encode('utf-8')), bcrypt.gensalt()
+    existing_user = users_collection.find_one({"username": username})
+    if existing_user:
+        return jsonify({"error": "username already exists"}), 409
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
    #inserting into MONGODB Users Database!!!!! :>>
     data = {
         "username": username,
-        "password": hashed
+        "password": hashed_password
     }
     result = users_collection.insert_one(data)
-    return jsonify({"message": "registered successfully :)"}), 200
+    return jsonify({"message": "registered successfully :)"}), 201
 
 
 #login page
