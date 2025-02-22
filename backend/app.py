@@ -7,6 +7,7 @@ app = Flask(__name__, template_folder = "frontend")
 
 MONGODB_URI = "mongodb+srv://anushasaxena06:QkVhYP3MT0WAhz5B@cluster0.8ibtd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(MONGODB_URI)
+#added databases in mongoDB Atlas basically
 db = client["water_rights"]
 users_collection = db["users"]
 problems_collection = db["problems"]
