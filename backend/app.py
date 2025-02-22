@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from pymongo import MongoClient
 <<<<<<< Updated upstream
 import os
-
+#git test comment
 app = Flask(__name__)
 
 client = MongoClient(os.getenv("MONGODB_URI"))
