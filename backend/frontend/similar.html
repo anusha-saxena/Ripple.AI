@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treaty Similarity</title>
+</head>
+<body>
+    <h1>Treaty Similarity Result</h1>
+    {% if treaty %}
+        <p><strong>Best Matching Treaty:</strong> {{ treaty['title'] }}</p>
+        <p><strong>Descrip<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Treaty Similarity Results</title>
+                <link rel="stylesheet" href="/static/styles.css"> <!-- Optional CSS file for styling -->
+            </head>
+            <body>
+                <h1>Treaty Similarity Results</h1>
+                {% if treaty %}
+                    <h2>Best Matching Treaty</h2>
+                    <p><strong>Title:</strong> {{ treaty.title }}</p>
+                    <p><strong>Description:</strong> {{ treaty.description }}</p>
+                    <p><strong>Similarity Score:</strong> {{ similarity }}%</p>
+                {% else %}
+                    <p>No similar treaty found.</p>
+                {% endif %}
+                
+                <a href="/submit">Submit Another Problem</a>
+            </body>
+            </html>
+            tion:</strong> {{ treaty['description'] }}</p>
+        <p><strong>Similarity Score:</strong> {{ similarity }}%</p>
+    {% else %}
+        <p>No similar treaty found.</p>
+    {% endif %}
+</body>
+</html>
