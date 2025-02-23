@@ -52,14 +52,13 @@ def compare_texts():
     text2 = data.get("text2")
 
     if not text1 or not text2:
-        return jsonify({"error": "Both text1 and text2 are required"}), 400
+        return jsonify({"error": "Both texts are needed"}), 400
 
-    # Compute SBERT embeddings
+    #obtain the sbert embeddings
     embedding1 = sbert_model.encode([text1])
     embedding2 = sbert_model.encode([text2])
 
-    # Compute cosine similarity
-    similarity_score = cosine_similarity(embedding1, embedding2)[0][0] * 100
+    similarity_score = cosine_similarity(embedding1, embedding2)[0][0] * 100 #compute percentage similarity 
 
     return jsonify({"similarity_score": round(similarity_score, 2)})
 
@@ -138,5 +137,3 @@ def submit_problem_post():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
