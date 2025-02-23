@@ -1,38 +1,407 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #8ecae6; 
+  color: #010000; /* Dark text for contrast */
+}
+
+.app {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 5%;
+  background: #023047;
+  color: #ffffff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin: 0 15px;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+  height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  color: #023047;
+  padding: 30px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.cta-button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  background: #ffb703;
+  border: none;
+  color: #023047;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cta-button:hover {
+  background: #e68900;
+}
+
+/* Footer */
+.footer {
+  background: #023047;
   color: white;
+  padding: 25px 0;
+  margin-top: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Ensure sections have proper structure */
+.section {
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column; /* Stack title and description */
+  align-items: center;
+  justify-content: flex-start; /* Start from top */
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding: 50px;
+  background: #8ecae6;
+}
+
+/* Title Styling */
+.section h2 {
+  font-size: 2.5rem;
+  color: #023047;
+  margin-bottom: 15px;
+  margin-top: 20px; /* Adds spacing from the top */
+}
+
+/* Description Styling */
+.section p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  color: #023047;
+  line-height: 1.6;
+  margin-top: auto; /* Pushes text lower while keeping it structured */
+}
+
+/* Alternating background colors for sections */
+.section:nth-child(odd) {
+  background: #64b2d6;
+}
+
+/* Center Submit Evidence Section */
+#submit.section {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  min-height: 100vh; /* Makes sure it fills the screen */
+  padding: 50px 20px;
+}
+
+/* Center the Form */
+.evidence-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px #8e06061a;
+  text-align: center; /* Ensures text inside is centered */
+}
+
+
+/* Input Fields */
+.evidence-form label {
+  font-weight: bold;
+  color: #023047;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.evidence-form input,
+.evidence-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Textarea for testimony */
+.evidence-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+/* Submit Button */
+.submit-button {
+  padding: 12px 20px;
+  margin-top: 15px;
+  font-size: 1rem;
+  background: #ffb703;
+  border: none;
+  color: #023047;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-button:hover {
+  background: #e68900;
+}
+
+/* Center the login/register form */
+#auth.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #8ecae6;
+}
+
+/* Form Container */
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Form Fields */
+.auth-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Submit Button */
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background: #ffb703;
+  color: #023047;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.auth-form button:hover {
+  background: #e68900;
+}
+
+/* Toggle Text */
+.toggle-text {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.toggle-text span {
+  color: #023047;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.toggle-text span:hover {
+  text-decoration: underline;
+}
+
+.claim-button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background-color: #fb8500;
+  color: #023047;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.claim-button:hover {
+  background-color: #fb8500;
+}
+
+/* Contact Us Section Styling */
+#contact.section {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  min-height: 100vh; /* Ensures the section fills the screen */
+  padding: 50px 20px;
+  background: #8ecae6; /* Background color similar to other sections */
+}
+
+/* Contact Form Layout */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px; /* Constrain width */
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Contact Us Heading */
+.contact-form h2 {
+  font-size: 2.5rem;
+  color: #023047;
+  margin-bottom: 15px;
+}
+
+.contact-form p {
+  font-size: 1.2rem;
+  color: #023047;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.contact-form label {
+  font-weight: bold;
+  color: #023047;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Textarea for message */
+.contact-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+.contact-form button,
+.claim-button {
+  padding: 12px 20px;
+  margin-top: 15px;
+  font-size: 1rem;
+  background: #ffb703;
+  border: none;
+  color: #023047;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact-form button:hover,
+.claim-button:hover {
+  background: #e68900;
+}
+
+.claim-button {
+  background-color: #fb8500;
+  display: inline-block;
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: none;
+}
+
+.claim-button:hover {
+  background-color: #e68900;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  #contact.section {
+    padding: 30px 10px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .contact-form {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .contact-form h2 {
+    font-size: 1.8rem;
+  }
+
+  .contact-form p {
+    font-size: 1rem;
+  }
+
+  .contact-form button,
+  .claim-button {
+    width: 100%;
+    padding: 15px;
   }
 }
