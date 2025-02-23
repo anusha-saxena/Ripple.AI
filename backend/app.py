@@ -22,7 +22,6 @@ settlements_collection = db["settlements"]
 def home():
     return "Flask server running :)"
 
-<<<<<<< Updated upstream
 #ai generated petition
 @app.route("/generate_petition", methods=["POST"])
 def generate_petition():
@@ -66,8 +65,6 @@ def compare_texts():
     return jsonify({"similarity_score": round(similarity_score, 2)})
 
 #user registration
-=======
->>>>>>> Stashed changes
 @app.route("/register", methods=["GET"])
 def register():
     return render_template("register.html")
