@@ -8,9 +8,6 @@ db = client["policy_database"]
 
 treaties_collection = db["treaties"]
 
-for treaty in treaties_collection.find():
-    print(treaty)
-
 
 for treaty in db.treaties.find():
     treaty_embedding = model.encode(treaty["text"])
@@ -22,3 +19,15 @@ for treaty in db.treaties.find():
 def find_similar_treaty(problem):
     problem_embedding = model.encode(problem)
     match = None
+    high_similarity = -1
+    for treaty in db.treaties.find():
+        treaty_embedding = np.array(treaty["embedding"])
+        similarity = np.dot(problem_embedding, treaty_embedding) / (
+            np.linalg.norm(problem_embedding) * np.linalg.norm(treaty_embedding) )
+        if similarity > highest_similarity:
+            highest_similarity = similarity
+            best_match = treaty
+
+    return best_match
+
+
