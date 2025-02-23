@@ -3,6 +3,9 @@ from pymongo import MongoClient
 import os
 import bcrypt
 from huggingface_hub import InferenceClient
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 app = Flask(__name__, template_folder = "frontend")
 app.secret_key = os.urandom(28)
@@ -13,12 +16,15 @@ db = client["water_rights"]
 users_collection = db["users"]
 problems_collection = db["problems"]
 
-#huggingface api setup 
+#huggingface api setup - generative 
 HF_TOKEN = os.getenv("HF_TOKEN") 
 llm_client = InferenceClient(
     model="microsoft/Phi-3-mini-4K-instruct",
     token=HF_TOKEN
 )
+
+#implement sbert for text similarity 
+sbert_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
 
 @app.route("/")
 def home():
@@ -37,6 +43,25 @@ def generate_petition():
     ai_response = llm_client.text_generation(prompt, max_new_tokens=200)
 
     return jsonify({"petition": ai_response})
+
+#text comparison 
+@app.route("/compare_texts", methods=["POST"])
+def compare_texts():
+    data = request.json
+    text1 = data.get("text1")
+    text2 = data.get("text2")
+
+    if not text1 or not text2:
+        return jsonify({"error": "Both text1 and text2 are required"}), 400
+
+    # Compute SBERT embeddings
+    embedding1 = sbert_model.encode([text1])
+    embedding2 = sbert_model.encode([text2])
+
+    # Compute cosine similarity
+    similarity_score = cosine_similarity(embedding1, embedding2)[0][0] * 100
+
+    return jsonify({"similarity_score": round(similarity_score, 2)})
 
 #user registration
 @app.route("/register", methods=["GET"])
