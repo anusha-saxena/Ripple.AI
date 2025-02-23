@@ -38,11 +38,21 @@ def generate_petition():
 
     if not issue_description:
         return jsonify({"error": "No issue description provided"}), 400
-    
-    prompt = f"Write a short petition for the following social justice issue: {issue_description}"
-    ai_response = llm_client.text_generation(prompt, max_new_tokens=200)
 
-    return jsonify({"petition": ai_response})
+    prompt = f"Write a short petition for the following social justice issue: {issue_description}"
+
+    ai_response = llm_client.post(
+        json = {"inputs": prompt, "parameters": {"max_new_tokens": 200}}
+    )
+
+    # Print the response for debugging
+    print("AI Response:", ai_response)
+
+    # Extract generated text
+    generated_text = ai_response.get("generated_text", "No response generated")
+
+    return jsonify({"petition": generated_text})
+
 
 #text comparison 
 @app.route("/compare_texts", methods=["POST"])
